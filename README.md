@@ -3,8 +3,8 @@
 The RTL design is for a 5-stage MIPS processor. Two versions of the pipelined processor were implemented. 
 You can find the RTL code for both versions below, along with the FPGA demo video for version 1.
 
-- RTL on simulation with branch prediction and data-path forwarding
-- RTL on FPGA without branch prediction
+- [non-FPGA] Simulation only - with branch prediction and data-path forwarding
+- [FPGA] Synthesized - without branch prediction and data-path forwarding
 
 The branch prediction was done using a simple 2-bit predictor. The datapath forwarding was implemented between the Execute, Memory, and Write Back stages of the pipeline. The initial scope of the project was only for simulating version 1, but I expanded on it to synthesize it on Artix-7 FPGA excluding some features from version 1 due to time limitation. 
 

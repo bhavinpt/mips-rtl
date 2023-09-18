@@ -1,0 +1,797 @@
+Chronologic VCS simulator copyright 1991-2020
+Contains Synopsys proprietary information.
+Compiler version R-2020.12; Runtime version R-2020.12;  Oct 20 15:29 2022
+NOTE: automatic random seed used: 2260338640
+
+
+ @5000 (1th clock)---------------------------------------
+INST_FETCH : PC=0 (1th inst) |   ADDIU source_1 = R0, target = R7, imm = 9,  | (00100100000001110000000000001001)
+
+
+ @15000 (2th clock)---------------------------------------
+INST_FETCH : PC=4 (2th inst) |   ADDIU source_1 = R0, target = R3, imm = 0,  | (00100100000000110000000000000000)
+INST_DECODE: A=0(R0) B=9(immediate)
+
+
+ @25000 (3th clock)---------------------------------------
+INST_FETCH : PC=8 (3th inst) |   ADDIU source_1 = R0, target = R5, imm = 36,  | (00100100000001010000000000100100)
+INST_DECODE: A=0(R0) B=0(immediate)
+EXECUTE    : A=0, B=9, result=9, inst_type:2
+
+
+ @35000 (4th clock)---------------------------------------
+INST_FETCH : PC=12 (4th inst) |   ADDU source_1 = R0, source_2 = R0, target = R1,  | (00000000000000000000100000100001)
+INST_DECODE: A=0(R0) B=36(immediate)
+EXECUTE    : A=0, B=0, result=0, inst_type:2
+initiated write of result=9 to R7
+
+
+ @45000 (5th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R7 with 9
+INST_DECODE: A=0(R0) B=0(R0)
+EXECUTE    : A=0, B=36, result=36, inst_type:1
+initiated write of result=0 to R3
+
+
+ @55000 (6th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R3 with 0
+INST_DECODE: A=9(R7) B=0(branch immediate)
+EXECUTE    : A=0, B=0, result=0, inst_type:5
+initiated write of result=36 to R5
+
+
+ @65000 (7th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R5 with 36
+INST_DECODE: A=0(R3) B=0(immediate)
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+initiated write of result=0 to R1
+
+
+ @75000 (8th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+WRITE_BACK : written R1 with 0
+INST_DECODE: A=36(R5) B=0(immediate)
+EXECUTE    : A=0, B=0, result=0, inst_type:4
+
+
+ @85000 (9th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=36, B=0, result=36, inst_type:0
+MEMORY     : read data=0 from address=0(0th) of memory
+
+
+ @95000 (10th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 0
+INST_DECODE: A=0(R2) B=0(R4)
+MEMORY     : read data=2 from address=36(9th) of memory
+
+
+ @105000 (11th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 2
+INST_DECODE: A=0(R1) B=0(R2)
+FORWARDING  : M/W Forwarded last result:2 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:0 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=0, B=2, result=0, inst_type:1 ( 1)
+
+
+ @115000 (12th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=0(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:0 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=0, B=0, result=0, inst_type:2
+initiated write of result=0 to R2
+
+
+ @125000 (13th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 0
+INST_DECODE: A=36(R5) B=4(immediate)
+EXECUTE    : A=0, B=4, result=4, inst_type:2
+initiated write of result=0 to R1
+
+
+ @135000 (14th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 0
+INST_DECODE: A=9(R7) B=-1(immediate)
+EXECUTE    : A=36, B=4, result=40, inst_type:2
+initiated write of result=4 to R3
+
+
+ @145000 (15th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 4
+INST_DECODE: A=9(R7) B=0(R2)
+EXECUTE    : A=9, B=-1, result=8, inst_type:7
+initiated write of result=40 to R5
+
+
+ @155000 (16th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 40
+INST_DECODE: A=9(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=8 to R7
+
+
+ @165000 (17th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 8
+INST_DECODE: A=4(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:8 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @175000 (18th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=40(R5) B=0(immediate)
+EXECUTE    : A=4, B=0, result=4, inst_type:4
+
+
+ @185000 (19th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=40, B=0, result=40, inst_type:0
+MEMORY     : read data=1 from address=4(1th) of memory
+
+
+ @195000 (20th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 1
+INST_DECODE: A=0(R2) B=2(R4)
+MEMORY     : read data=3 from address=40(10th) of memory
+
+
+ @205000 (21th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 3
+INST_DECODE: A=0(R1) B=1(R2)
+FORWARDING  : M/W Forwarded last result:3 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:1 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=1, B=3, result=3, inst_type:1 ( 1)
+
+
+ @215000 (22th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=4(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:3 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=0, B=3, result=3, inst_type:2
+initiated write of result=3 to R2
+
+
+ @225000 (23th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 3
+INST_DECODE: A=40(R5) B=4(immediate)
+EXECUTE    : A=4, B=4, result=8, inst_type:2
+initiated write of result=3 to R1
+
+
+ @235000 (24th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 3
+INST_DECODE: A=8(R7) B=-1(immediate)
+EXECUTE    : A=40, B=4, result=44, inst_type:2
+initiated write of result=8 to R3
+
+
+ @245000 (25th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 8
+INST_DECODE: A=8(R7) B=3(R2)
+EXECUTE    : A=8, B=-1, result=7, inst_type:7
+initiated write of result=44 to R5
+
+
+ @255000 (26th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 44
+INST_DECODE: A=8(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=7 to R7
+
+
+ @265000 (27th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 7
+INST_DECODE: A=8(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:7 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @275000 (28th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=44(R5) B=0(immediate)
+EXECUTE    : A=8, B=0, result=8, inst_type:4
+
+
+ @285000 (29th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=44, B=0, result=44, inst_type:0
+MEMORY     : read data=5 from address=8(2th) of memory
+
+
+ @295000 (30th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 5
+INST_DECODE: A=3(R2) B=3(R4)
+MEMORY     : read data=7 from address=44(11th) of memory
+
+
+ @305000 (31th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 7
+INST_DECODE: A=3(R1) B=5(R2)
+FORWARDING  : M/W Forwarded last result:7 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:5 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=5, B=7, result=35, inst_type:1 ( 1)
+
+
+ @315000 (32th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=8(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:35 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=3, B=35, result=38, inst_type:2
+initiated write of result=35 to R2
+
+
+ @325000 (33th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 35
+INST_DECODE: A=44(R5) B=4(immediate)
+EXECUTE    : A=8, B=4, result=12, inst_type:2
+initiated write of result=38 to R1
+
+
+ @335000 (34th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 38
+INST_DECODE: A=7(R7) B=-1(immediate)
+EXECUTE    : A=44, B=4, result=48, inst_type:2
+initiated write of result=12 to R3
+
+
+ @345000 (35th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 12
+INST_DECODE: A=7(R7) B=35(R2)
+EXECUTE    : A=7, B=-1, result=6, inst_type:7
+initiated write of result=48 to R5
+
+
+ @355000 (36th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 48
+INST_DECODE: A=7(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=6 to R7
+
+
+ @365000 (37th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 6
+INST_DECODE: A=12(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:6 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @375000 (38th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=48(R5) B=0(immediate)
+EXECUTE    : A=12, B=0, result=12, inst_type:4
+
+
+ @385000 (39th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=48, B=0, result=48, inst_type:0
+MEMORY     : read data=9 from address=12(3th) of memory
+
+
+ @395000 (40th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 9
+INST_DECODE: A=35(R2) B=7(R4)
+MEMORY     : read data=1 from address=48(12th) of memory
+
+
+ @405000 (41th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 1
+INST_DECODE: A=38(R1) B=9(R2)
+FORWARDING  : M/W Forwarded last result:1 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:9 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=9, B=1, result=9, inst_type:1 ( 1)
+
+
+ @415000 (42th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=12(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:9 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=38, B=9, result=47, inst_type:2
+initiated write of result=9 to R2
+
+
+ @425000 (43th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 9
+INST_DECODE: A=48(R5) B=4(immediate)
+EXECUTE    : A=12, B=4, result=16, inst_type:2
+initiated write of result=47 to R1
+
+
+ @435000 (44th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 47
+INST_DECODE: A=6(R7) B=-1(immediate)
+EXECUTE    : A=48, B=4, result=52, inst_type:2
+initiated write of result=16 to R3
+
+
+ @445000 (45th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 16
+INST_DECODE: A=6(R7) B=9(R2)
+EXECUTE    : A=6, B=-1, result=5, inst_type:7
+initiated write of result=52 to R5
+
+
+ @455000 (46th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 52
+INST_DECODE: A=6(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=5 to R7
+
+
+ @465000 (47th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 5
+INST_DECODE: A=16(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:5 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @475000 (48th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=52(R5) B=0(immediate)
+EXECUTE    : A=16, B=0, result=16, inst_type:4
+
+
+ @485000 (49th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=52, B=0, result=52, inst_type:0
+MEMORY     : read data=5 from address=16(4th) of memory
+
+
+ @495000 (50th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 5
+INST_DECODE: A=9(R2) B=1(R4)
+MEMORY     : read data=7 from address=52(13th) of memory
+
+
+ @505000 (51th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 7
+INST_DECODE: A=47(R1) B=5(R2)
+FORWARDING  : M/W Forwarded last result:7 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:5 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=5, B=7, result=35, inst_type:1 ( 1)
+
+
+ @515000 (52th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=16(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:35 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=47, B=35, result=82, inst_type:2
+initiated write of result=35 to R2
+
+
+ @525000 (53th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 35
+INST_DECODE: A=52(R5) B=4(immediate)
+EXECUTE    : A=16, B=4, result=20, inst_type:2
+initiated write of result=82 to R1
+
+
+ @535000 (54th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 82
+INST_DECODE: A=5(R7) B=-1(immediate)
+EXECUTE    : A=52, B=4, result=56, inst_type:2
+initiated write of result=20 to R3
+
+
+ @545000 (55th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 20
+INST_DECODE: A=5(R7) B=35(R2)
+EXECUTE    : A=5, B=-1, result=4, inst_type:7
+initiated write of result=56 to R5
+
+
+ @555000 (56th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 56
+INST_DECODE: A=5(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=4 to R7
+
+
+ @565000 (57th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 4
+INST_DECODE: A=20(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:4 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @575000 (58th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=56(R5) B=0(immediate)
+EXECUTE    : A=20, B=0, result=20, inst_type:4
+
+
+ @585000 (59th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=56, B=0, result=56, inst_type:0
+MEMORY     : read data=4 from address=20(5th) of memory
+
+
+ @595000 (60th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 4
+INST_DECODE: A=35(R2) B=7(R4)
+MEMORY     : read data=6 from address=56(14th) of memory
+
+
+ @605000 (61th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 6
+INST_DECODE: A=82(R1) B=4(R2)
+FORWARDING  : M/W Forwarded last result:6 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:4 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=4, B=6, result=24, inst_type:1 ( 1)
+
+
+ @615000 (62th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=20(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:24 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=82, B=24, result=106, inst_type:2
+initiated write of result=24 to R2
+
+
+ @625000 (63th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 24
+INST_DECODE: A=56(R5) B=4(immediate)
+EXECUTE    : A=20, B=4, result=24, inst_type:2
+initiated write of result=106 to R1
+
+
+ @635000 (64th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 106
+INST_DECODE: A=4(R7) B=-1(immediate)
+EXECUTE    : A=56, B=4, result=60, inst_type:2
+initiated write of result=24 to R3
+
+
+ @645000 (65th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 24
+INST_DECODE: A=4(R7) B=24(R2)
+EXECUTE    : A=4, B=-1, result=3, inst_type:7
+initiated write of result=60 to R5
+
+
+ @655000 (66th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 60
+INST_DECODE: A=4(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=3 to R7
+
+
+ @665000 (67th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 3
+INST_DECODE: A=24(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:3 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @675000 (68th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=60(R5) B=0(immediate)
+EXECUTE    : A=24, B=0, result=24, inst_type:4
+
+
+ @685000 (69th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=60, B=0, result=60, inst_type:0
+MEMORY     : read data=7 from address=24(6th) of memory
+
+
+ @695000 (70th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 7
+INST_DECODE: A=24(R2) B=6(R4)
+MEMORY     : read data=9 from address=60(15th) of memory
+
+
+ @705000 (71th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 9
+INST_DECODE: A=106(R1) B=7(R2)
+FORWARDING  : M/W Forwarded last result:9 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:7 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=7, B=9, result=63, inst_type:1 ( 1)
+
+
+ @715000 (72th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=24(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:63 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=106, B=63, result=169, inst_type:2
+initiated write of result=63 to R2
+
+
+ @725000 (73th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 63
+INST_DECODE: A=60(R5) B=4(immediate)
+EXECUTE    : A=24, B=4, result=28, inst_type:2
+initiated write of result=169 to R1
+
+
+ @735000 (74th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 169
+INST_DECODE: A=3(R7) B=-1(immediate)
+EXECUTE    : A=60, B=4, result=64, inst_type:2
+initiated write of result=28 to R3
+
+
+ @745000 (75th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 28
+INST_DECODE: A=3(R7) B=63(R2)
+EXECUTE    : A=3, B=-1, result=2, inst_type:7
+initiated write of result=64 to R5
+
+
+ @755000 (76th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 64
+INST_DECODE: A=3(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=2 to R7
+
+
+ @765000 (77th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 2
+INST_DECODE: A=28(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:2 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @775000 (78th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=64(R5) B=0(immediate)
+EXECUTE    : A=28, B=0, result=28, inst_type:4
+
+
+ @785000 (79th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=64, B=0, result=64, inst_type:0
+MEMORY     : read data=7 from address=28(7th) of memory
+
+
+ @795000 (80th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 7
+INST_DECODE: A=63(R2) B=9(R4)
+MEMORY     : read data=9 from address=64(16th) of memory
+
+
+ @805000 (81th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 9
+INST_DECODE: A=169(R1) B=7(R2)
+FORWARDING  : M/W Forwarded last result:9 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:7 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=7, B=9, result=63, inst_type:1 ( 1)
+
+
+ @815000 (82th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=28(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:63 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=169, B=63, result=232, inst_type:2
+initiated write of result=63 to R2
+
+
+ @825000 (83th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 63
+INST_DECODE: A=64(R5) B=4(immediate)
+EXECUTE    : A=28, B=4, result=32, inst_type:2
+initiated write of result=232 to R1
+
+
+ @835000 (84th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 232
+INST_DECODE: A=2(R7) B=-1(immediate)
+EXECUTE    : A=64, B=4, result=68, inst_type:2
+initiated write of result=32 to R3
+
+
+ @845000 (85th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 32
+INST_DECODE: A=2(R7) B=63(R2)
+EXECUTE    : A=2, B=-1, result=1, inst_type:7
+initiated write of result=68 to R5
+
+
+ @855000 (86th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 68
+INST_DECODE: A=2(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=1 to R7
+
+
+ @865000 (87th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 1
+INST_DECODE: A=32(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:1 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 0 instructions (predicted:0, actual:0 -> passed: 1)
+
+
+ @875000 (88th clock)---------------------------------------
+Inserting Load Delay
+INST_FETCH : PC=24 (7th inst) |   NOP  | (00000000000000000000000000000000)
+INST_DECODE: A=68(R5) B=0(immediate)
+EXECUTE    : A=32, B=0, result=32, inst_type:4
+
+
+ @885000 (89th clock)---------------------------------------
+INST_FETCH : PC=28 (8th inst) |   MUL source_1 = R2, source_2 = R4, target = R2,  | (00000000010001000001000000011000)
+EXECUTE    : A=68, B=0, result=68, inst_type:0
+MEMORY     : read data=0 from address=32(8th) of memory
+
+
+ @895000 (90th clock)---------------------------------------
+INST_FETCH : PC=32 (9th inst) |   ADDU source_1 = R1, source_2 = R2, target = R1,  | (00000000001000100000100000100001)
+WRITE_BACK : written R2 with 0
+INST_DECODE: A=63(R2) B=9(R4)
+MEMORY     : read data=2 from address=68(17th) of memory
+
+
+ @905000 (91th clock)---------------------------------------
+INST_FETCH : PC=36 (10th inst) |   ADDIU source_1 = R3, target = R3, imm = 4,  | (00100100011000110000000000000100)
+WRITE_BACK : written R4 with 2
+INST_DECODE: A=232(R1) B=0(R2)
+FORWARDING  : M/W Forwarded last result:2 scheduled to be written in R4 back to ALU input R4(B) of this instruction
+FORWARDING  : WB Forwarded last result:0 scheduled to be written in R2 back to ALU input R2(A) of this instruction
+EXECUTE    : A=0, B=2, result=0, inst_type:1 ( 1)
+
+
+ @915000 (92th clock)---------------------------------------
+INST_FETCH : PC=40 (11th inst) |   ADDIU source_1 = R5, target = R5, imm = 4,  | (00100100101001010000000000000100)
+INST_DECODE: A=32(R3) B=4(immediate)
+FORWARDING  : ALU/ALU Forwarded last result:0 scheduled to be written in R2 back to ALU input R2(B) of this instruction
+EXECUTE    : A=232, B=0, result=232, inst_type:2
+initiated write of result=0 to R2
+
+
+ @925000 (93th clock)---------------------------------------
+INST_FETCH : PC=44 (12th inst) |   ADDIU source_1 = R7, target = R7, imm = -1,  | (00100100111001111111111111111111)
+WRITE_BACK : written R2 with 0
+INST_DECODE: A=68(R5) B=4(immediate)
+EXECUTE    : A=32, B=4, result=36, inst_type:2
+initiated write of result=232 to R1
+
+
+ @935000 (94th clock)---------------------------------------
+INST_FETCH : PC=48 (13th inst) |   J Joffset = -9  | (00001011111111111111111111110111)
+WRITE_BACK : written R1 with 232
+INST_DECODE: A=1(R7) B=-1(immediate)
+EXECUTE    : A=68, B=4, result=72, inst_type:2
+initiated write of result=36 to R3
+
+
+ @945000 (95th clock)---------------------------------------
+PREDICTED: taken=0
+INST_FETCH : PC=16 (5th inst) |   BEQ source_1 = R7, source_2 = R0, imm = 8,  | (00010000111000000000000000001000)
+WRITE_BACK : written R3 with 36
+INST_DECODE: A=1(R7) B=0(R2)
+EXECUTE    : A=1, B=-1, result=0, inst_type:7
+initiated write of result=72 to R5
+
+
+ @955000 (96th clock)---------------------------------------
+INST_FETCH : PC=20 (6th inst) |   LW source_1 = R3, target = R2, imm = 0,  | (10001100011000100000000000000000)
+WRITE_BACK : written R5 with 72
+INST_DECODE: A=1(R7) B=0(branch immediate)
+EXECUTE    : already taken unconditional Jump
+initiated write of result=0 to R7
+
+
+ @965000 (97th clock)---------------------------------------
+INST_FETCH : PC=24 (7th inst) |   LW source_1 = R5, target = R4, imm = 0,  | (10001100101001000000000000000000)
+WRITE_BACK : written R7 with 0
+INST_DECODE: A=36(R3) B=0(immediate)
+FORWARDING  : M/W Forwarded last result:0 scheduled to be written in R7 back to ALU input R7(A) of this instruction
+EXECUTE    : Branching 8 instructions (predicted:0, actual:1 -> passed: 0)
+
+
+ @975000 (98th clock)---------------------------------------
+STALL Detected : prev_2b_predictor: 00, new_2b_predictor : 01
+INST_FETCH : PC=52 (14th inst) |   JR source_1 = R31,  | (00000011111000000000000000001000)
+INST_DECODE: A=72(R5) B=0(immediate)
+EXECUTE    : A=36, B=0, result=36, inst_type:4
+
+
+ @985000 (99th clock)---------------------------------------
+INST_DECODE: A=0(R31) B=0(R0)
+EXECUTE    : A=72, B=0, result=72, inst_type:6
+MEMORY     : read data=2 from address=36(9th) of memory
+
+
+ @995000 (100th clock)---------------------------------------
+WRITE_BACK : written R2 with 2
+INST_DECODE: A=0(R31) B=0(R0)
+MEMORY     : read data=x from address=72(18th) of memory
+
+
+ @1005000 (101th clock)---------------------------------------
+WRITE_BACK : written R4 with x
+INST_DECODE: A=0(R31) B=0(R0)
+
+
+ @1015000 (102th clock)---------------------------------------
+INST_DECODE: A=0(R31) B=0(R0)
+
+
+ @1025000 (103th clock)---------------------------------------
+INST_DECODE: A=0(R31) B=0(R0)
+
+
+ Finished!!! ALL Instructions have been executed [total clocks: 103]
+
+
+$finish called from file "tb.sv", line 33.
+$finish at simulation time              1025000
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 1025000 ps
+CPU Time:      0.340 seconds;       Data structure size:   0.0Mb
+Thu Oct 20 15:29:02 2022
